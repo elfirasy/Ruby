@@ -27,4 +27,8 @@ if __FILE__ == $0
 	a = true
 	puts a
 	puts !a
+	
+	b = false
+	puts b
+	puts !b
 end

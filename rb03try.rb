@@ -1,30 +1,24 @@
-class Hitung
-	attr_accessor :first, :second, :third, :fourth, :result
+class Statistic
+	attr_accessor :kota, :columns
 
-	def initialize ( a, b, c, d)
-		@first = a
-		@second = b
-		@third = c
-		@fourth = d
+	def csv(file)
+	  File.open(file) do|f|
+	    @columns = f.readline.chomp.split(',')
+
+	    @kota = []
+	    until f.eof?
+	      row = f.readline.chomp.split(',')
+	      row = columns.zip(row).flatten
+	      table << Hash[*row]
+	    end
+	  end
 	end
 
-	def Hresult
-		@result = @first + @second * ( @third - @fourth)
-	end
-
-	def Xresult
-		@result = @first.+(@second.*(@third.-(@fourth)))
-	end
+	
 
 end
 
-if __FILE__ == $0
-
-	hit = Hitung.new(2,4,6,3)
-	puts hit.Hresult
-	puts hit.Xresult
-
-	a = true
-	puts a
-	puts !a
-end
+doc = Statistic.new
+columns, kota = doc.csv('data_kota.csv')
+puts kota[1]['Dari']
+puts kota[1]['Ke']

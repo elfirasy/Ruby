@@ -14,7 +14,9 @@ class Statistic
 
 	def add_daftar (file)
 		# read file
-		File.foreach("./" + file ) { |line| add_rute(line) }
+		File.foreach("./" + file ) do |line|
+			add_rute(line)
+		end
 
 		# menghilangkan newline pada array
 		@kota_tujuan.map{ |x| x.strip! }
@@ -113,16 +115,15 @@ class Statistic
 		  b.split(' ').reverse.join(' ') <=> a.split(' ').reverse.join(' ')
 		end
 	end
-
 end
 
-doc = Statistic.new('data_kota.csv')
+doc = Statistic.new('empty_shipping.csv')
 puts "Daftar Kota Asal: "
 puts doc.kota_asal
 
 puts "\nDaftar Kota Tujuan: "
 puts doc.kota_tujuan
 
-puts "\nDaftar Kota Yang Dikunjungi Lebih Dari 1 kali: "
-doc.list_kota_by_counter(2)
+puts "\nDaftar Kota Yang Dikunjungi Lebih Dari n (ex: n = 200 ) kali: "
+doc.list_kota_by_counter(200)
 puts doc.list_kota_by_limit

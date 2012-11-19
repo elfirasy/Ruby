@@ -1,34 +1,34 @@
-class Hitung
-	attr_accessor :first, :second, :third, :fourth, :result
+# input
+filename = ARGV.first
+ip_addr = ARGV.last
+#puts "#{filename}"
+#puts "#{ip_addr}"
 
-	def initialize ( a, b, c, d)
-		@first = a
-		@second = b
-		@third = c
-		@fourth = d
-	end
+# sender
+require 'socket'
 
-	def Hresult
-		@result = @first + @second * ( @third - @fourth)
-	end
+TCPSocket.open("#{ip_addr}" , 2000) do |socket| 
+  File.open("#{filename}", 'rb') do |file|
+      while chunk = file.read()
+      socket.write(chunk)
+    end
+  end
+end 
 
-	def Xresult
-		@result = @first.+(@second.*(@third.-(@fourth)))
-	end
+# receiver
+require 'socket'
+require 'benchmark'
 
+server =  TCPServer.new("#{ip_addr}", 2000)
+puts "Server listening..."            
+client = server.accept       
+
+time = Benchmark.realtime do
+  File.open("../#{filename}", 'w') do |file|
+    while chunk = client.read()
+      file.write(chunk)
+    end
+  end
 end
 
-if __FILE__ == $0
-
-	hit = Hitung.new(2,4,6,3)
-	puts hit.Hresult
-	puts hit.Xresult
-
-	a = true
-	puts a
-	puts !a
-	
-	b = false
-	puts b
-	puts !b
-end
+puts "Time elapsed: #{time} for transfering file #{filename}." and exit

@@ -31,4 +31,4 @@ time = Benchmark.realtime do
   end
 end
 
-puts "Time elapsed: #{time} for transfering file #{filename}." and exit
+client.puts "Time elapsed: #{time} for transfering file #{filename}." and exit

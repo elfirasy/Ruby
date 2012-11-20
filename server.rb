@@ -1,7 +1,7 @@
 require 'socket'
 puts "Starting up server..."
 
-server = TCPServer.new('192.168.0.107', 2008)
+server = TCPServer.new(2008)
 
 while (session = server.accept)
 

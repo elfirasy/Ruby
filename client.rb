@@ -1,6 +1,6 @@
 require 'socket'
 
-clientSession = TCPSocket.new( "192.168.0.107", 2008 )
+clientSession = TCPSocket.new( "localhost", 2008 )
 puts "log: starting connection"
 cmd = ARGV.first
 puts "log: saying hello"

@@ -8,20 +8,23 @@ if task == "--received"
 	TCPSocket.open('127.0.0.1' , 2000) do |socket|
 
 		filename = socket.gets
+		puts socket.gets
+		puts socket.gets
+		puts socket.gets
 
 		File.open("../../Documents/#{filename}", 'w') do |file|
-			while chunk = client.read(SIZE)
-			  file.write(chunk)
+			while chunk = socket.read(SIZE)
+			  	file.write(chunk)
 			end
-		end
-
-		while line = socket.gets
-		  puts line
 		end
 
 		socket.close
 	end 
 
+elsif task == "--quit"
+	puts "Server was closed"
+	socket = TCPSocket.open('127.0.0.1', 2000)
+	socket.close
 else
 	puts "File can not transfered"
 	puts "type --received to transfer file"

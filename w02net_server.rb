@@ -10,16 +10,18 @@ server =  TCPServer.new("#{ip_addr}", 2000)
 puts "Server listening..."
 loop do      
 	client = server.accept
-
-	File.open("#{filename}", 'rb') do |file|
-	  	while chunk = file.read()
-	  		socket.write(chunk)
-		end
-	end
-
 	client.puts "#{filename}"
+
 	client.puts "Hello !"
 	client.puts "File #{filename} has been success transfered to IP #{ip_addr}"
 	client.puts "Time transfered is #{Time.now}"
+
+	File.open("#{filename}", 'rb') do |file|
+	  	while chunk = file.read(SIZE)
+	  		client.write(chunk)
+		end
+	end
+
 	client.close
+	server.close
 end
